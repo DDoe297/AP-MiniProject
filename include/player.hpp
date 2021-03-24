@@ -1,18 +1,25 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <iostream>
+
 namespace XnO
 {
     class Player
     {
     private:
-        /* data */
+        std::string userName;
+
     public:
-        Player(/* args */);
+        Player(std::string username);
+        void requestGame(Player &player, Board &board);
+        void replayGame(Game &game);
+        void play(Game &game, int point);
+        std::string getUserName();
         ~Player();
     };
 
-    Player::Player(/* args */)
+    Player::Player(std::string username)
     {
     }
 
