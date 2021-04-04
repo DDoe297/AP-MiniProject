@@ -7,8 +7,10 @@ Date    : 24/Mar/2021
 --------------------------------------------------
 */
 #include <iostream>
-using namespace std;
+#include "../include/client_connection.hpp"
+// using namespace std;
 int main(void)
 {
+    initConnections();
     return 0;
 }
