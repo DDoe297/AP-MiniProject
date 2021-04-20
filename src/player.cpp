@@ -17,7 +17,7 @@ int XnO::Player::getRemainTime()
     return remainTime;
 }
 
-void XnO::Player::play(XnO::Game &game, int point)
+int XnO::Player::getName()
 {
-    game.board->setTile(point, name);
+    return name;
 }
