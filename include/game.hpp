@@ -1,17 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
-#include "./player.hpp"
+#include <iostream>
 #include "./board.hpp"
 
 namespace XnO
 {
-    enum gameStatus
-    {
-        Waiting,
-        Playing,
-        Rejected
-    };
-
     enum gameTurn
     {
         Player1,
@@ -21,22 +14,18 @@ namespace XnO
     class Game
     {
     private:
-        Player *player1;
-        Player *player2;
-        gameStatus status;
-        gameTurn trun;
-        Board board;
+        std::string player1;
+        std::string player2;
+
+        gameTurn turn;
+        Board *board;
 
     public:
-        Game(Player &_player1, Player &_player2, Board &_board);
+        Game(boardType type);
         gameTurn getTurn();
-        void setTurn(gameTurn);
-        gameStatus getStatus();
-        void setStatus(gameStatus);
-        Player *getPlayer(int number);
+        void setTurn(gameTurn turn);
         ~Game();
     };
-
 
 } // namespace XnO
 
