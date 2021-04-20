@@ -18,9 +18,9 @@ namespace XnO
         std::string player2;
 
         gameTurn turn;
-        Board *board;
 
     public:
+        Board *board;
         Game(boardType type);
         gameTurn getTurn();
         void setTurn(gameTurn turn);

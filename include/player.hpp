@@ -2,31 +2,22 @@
 #define PLAYER_H
 
 #include <iostream>
-
+#include "./game.hpp"
 namespace XnO
 {
     class Player
     {
     private:
-        std::string userName;
+        int name;
+        int remainTime;
 
     public:
-        Player(std::string username);
-        void requestGame(Player &player, Board &board);
-        void replayGame(Game &game);
+        Player(int c);
         void play(Game &game, int point);
-        std::string getUserName();
+        void setRemainTime(int _time);
+        int getRemainTime();
         ~Player();
     };
-
-    Player::Player(std::string username)
-    {
-    }
-
-    Player::~Player()
-    {
-    }
-
 } // namespace XnO
 
 #endif

@@ -14,7 +14,7 @@ namespace XnO
     {
     private:
         boardType type;
-        std::vector<char> tiles;
+        std::vector<int> tiles;
         int size;
 
     public:

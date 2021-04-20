@@ -22,7 +22,7 @@ void playerOneSend(boost ::asio::ip::tcp::socket &sock)
 {
     while (true)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         std::string msg = "player one test messsage";
         //std::cin >> msg;
         msg += "\n";
@@ -44,7 +44,7 @@ void playerTwoSend(boost ::asio::ip::tcp::socket &sock)
 {
     while (true)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         std::string msg = "player two test messsage";
         // std::cin >> msg;
         msg += "\n";
@@ -55,7 +55,6 @@ void playerTwoSend(boost ::asio::ip::tcp::socket &sock)
 void initConnections()
 {
     boost::asio::io_service io;
-    
 
     boost::asio::ip::tcp::socket playerOneSock(io);
     boost::asio::ip::tcp::socket playerTwoSock(io);
