@@ -2,6 +2,7 @@
 #define GAME_H
 #include <iostream>
 #include "./board.hpp"
+#include "./player.hpp"
 
 namespace XnO
 {
@@ -14,9 +15,8 @@ namespace XnO
     class Game
     {
     private:
-        std::string player1;
-        std::string player2;
-
+        Player *player1;
+        Player *player2;
         gameTurn turn;
 
     public:
@@ -24,6 +24,7 @@ namespace XnO
         Game(boardType type);
         gameTurn getTurn();
         void setTurn(gameTurn turn);
+        void play(int point);
         ~Game();
     };
 
