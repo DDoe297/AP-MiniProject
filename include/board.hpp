@@ -18,21 +18,13 @@ namespace XnO
         int size;
 
     public:
-        Board(boardType type);
+        Board(boardType _type);
         void setTile(int tile, int player);
-        void getTile(int tile);
-
+        char getTile(int tile);
+        int char2player(char c);
         int checkWinner();
         ~Board();
     };
-
-    Board::Board(boardType type)
-    {
-    }
-
-    Board::~Board()
-    {
-    }
 
 } // namespace XnO
 

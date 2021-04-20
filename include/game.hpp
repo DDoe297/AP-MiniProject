@@ -37,13 +37,6 @@ namespace XnO
         ~Game();
     };
 
-    Game::Game(Player &_player1, Player &_player2, Board &_board)
-    {
-    }
-
-    Game::~Game()
-    {
-    }
 
 } // namespace XnO
 
