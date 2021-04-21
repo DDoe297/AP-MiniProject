@@ -14,6 +14,25 @@ std::string outputServer(int gameType, std::vector<int> gameBase, int turn, int 
     stringStream << turn << "-" << remainingTime << "\n";
     return stringStream.str();
 }
+std::string outputServer(int messageType, int message)
+{
+    if (messageType == 1)
+    {
+        std::stringstream stringStream;
+        stringStream << "1:" << message;
+        return stringStream.str();
+    }
+    else if (messageType == 3)
+    {
+        std::stringstream stringStream;
+        stringStream << "3:" << message;
+        return stringStream.str();
+    }
+    else
+    {
+        return NULL;
+    }
+}
 void inputClient(std::string input)
 {
     std::istringstream split(input);
@@ -70,6 +89,25 @@ void inputServer(std::string input)
         int place;
         std::getline(split, token, ':');
         place = stoi(token);
+    }
+}
+std::string outputClient(int messageType, int message)
+{
+    if (messageType == 1)
+    {
+        std::stringstream stringStream;
+        stringStream << "1:" << message;
+        return stringStream.str();
+    }
+    else if (messageType == 2)
+    {
+        std::stringstream stringStream;
+        stringStream << "2:" << message;
+        return stringStream.str();
+    }
+    else
+    {
+        return NULL;
     }
 }
 int main(void)
