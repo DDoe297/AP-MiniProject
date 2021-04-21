@@ -16,3 +16,8 @@ void XnO::Game::setTurn(XnO::gameTurn turn)
 {
     turn = turn;
 }
+void XnO::Game::play(int point)
+{
+    board->setTile(point, (turn == Player1) ? player1->getName() : player2->getName());
+    turn = (turn == Player1) ? Player2 : Player1;
+}

@@ -7,6 +7,7 @@
 #include <thread>
 #include "../include/connection.hpp"
 #include "../include/logger.hpp"
+#include "./include/game.hpp"
 
 void playerOneReceive(boost::asio::ip::tcp::socket &sock)
 {
@@ -58,12 +59,14 @@ void initConnections()
 
     boost::asio::ip::tcp::socket playerOneSock(io);
     boost::asio::ip::tcp::socket playerTwoSock(io);
+    
 
     // boost::asio::ip::tcp::acceptor acc(io, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 1234));
     boost::asio::ip::tcp::acceptor acc(io, boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 1234));
     DEBUG << "waiting for player one";
     acc.accept(playerOneSock);
     DEBUG << "player one joined";
+    
 
     std::thread playerOneR(playerOneReceive, std::ref(playerOneSock));
     DEBUG << "thread are constructed";
