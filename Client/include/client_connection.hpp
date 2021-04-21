@@ -3,8 +3,7 @@
 
 #include <boost/asio.hpp>
 #include <thread>
-
-
+#include "GlobalVars.hpp"
 
 void receive(boost::asio::ip::tcp::socket &sock);
 
