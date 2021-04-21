@@ -5,9 +5,9 @@
 #include <thread>
 #include "GlobalVars.hpp"
 
-void receive(boost::asio::ip::tcp::socket &sock);
+void receiveData(boost::asio::ip::tcp::socket &sock);
 
-void send(boost::asio::ip::tcp::socket &sock);
+void sendData(boost::asio::ip::tcp::socket &sock);
 
 void initConnections();
 
