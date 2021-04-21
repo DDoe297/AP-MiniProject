@@ -6,5 +6,6 @@
 #include <string>
 #include <vector>
 std::string outputServer(int gameType, std::vector<int> gameBase, int turn, int remainingTime);
-void inputClient(std::string input);
+std::string outputServer(int messageType, int message);
+void inputServer(std::string input);
 #endif
