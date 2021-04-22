@@ -15,11 +15,11 @@ namespace XnO
     class Game
     {
     private:
-        Player *player1;
-        Player *player2;
         gameTurn turn;
 
     public:
+        Player *player1;
+        Player *player2;
         Board *board;
         Game(boardType type);
         gameTurn getTurn();

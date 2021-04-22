@@ -7,5 +7,5 @@
 #include <vector>
 std::string outputServer(int gameType, std::vector<int> gameBase, int turn, int remainingTime);
 std::string outputServer(int messageType, int message);
-void inputServer(std::string input);
+int inputServer(std::string input);
 #endif

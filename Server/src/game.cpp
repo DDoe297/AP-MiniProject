@@ -5,6 +5,8 @@ XnO::Game::Game(boardType type)
 {
     turn = Player1;
     board = new Board(type);
+    player1 = new Player(1);
+    player2 = new Player(2);
 }
 
 XnO::gameTurn XnO::Game::getTurn()

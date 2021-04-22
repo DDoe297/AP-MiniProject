@@ -21,6 +21,15 @@ void XnO::Board::setTile(int tile, int player)
 {
     tiles[tile] = player;
 }
+XnO::boardType XnO::Board::getType()
+{
+    return type;
+}
+
+std::vector<int> XnO::Board::getTiles()
+{
+    return tiles;
+}
 
 int XnO::Board::checkWinner()
 {

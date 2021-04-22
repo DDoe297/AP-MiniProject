@@ -1,5 +1,5 @@
 #include "../include/data_parser.hpp"
-void inputServer(std::string input)
+int inputServer(std::string input)
 {
     std::istringstream split(input);
     std::string token;
@@ -11,12 +11,14 @@ void inputServer(std::string input)
         int gameType;
         std::getline(split, token, ':');
         gameType = stoi(token);
+        return gameType;
     }
     else if (dType == 2)
     {
         int place;
         std::getline(split, token, ':');
         place = stoi(token);
+        return place;
     }
 }
 std::string outputServer(int gameType, std::vector<int> gameBase, int turn, int remainingTime)

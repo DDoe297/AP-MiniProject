@@ -13,7 +13,6 @@ namespace XnO
 
     public:
         Player(int c);
-        void play(Game &game, int point);
         void setRemainTime(int _time);
         int getRemainTime();
         int getName();

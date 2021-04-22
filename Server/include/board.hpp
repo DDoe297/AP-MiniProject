@@ -21,6 +21,8 @@ namespace XnO
         Board(boardType _type);
         void setTile(int tile, int player);
         char getTile(int tile);
+        boardType getType(); 
+        std::vector<int> getTiles();
         int char2player(char c);
         int checkWinner();
         ~Board();
