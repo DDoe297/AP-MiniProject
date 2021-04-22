@@ -16,7 +16,7 @@ void playerOneReceive(boost::asio::ip::tcp::socket &sock, XnO::Game &game)
     {
         boost::asio::streambuf buff;
         boost::asio::read_until(sock, buff, "\n");
-        int place = inputServer(boost::asio::buffer_cast<std::string>(buff.data()));
+        int place = inputServer(std::string(boost::asio::buffer_cast<const char *>(buff.data())));
         game.play(place);
     }
 }
@@ -61,7 +61,7 @@ void playerTwoReceive(boost::asio::ip::tcp::socket &sock, XnO::Game &game)
     {
         boost::asio::streambuf buff;
         boost::asio::read_until(sock, buff, "\n");
-        int place = inputServer(boost::asio::buffer_cast<std::string>(buff.data()));
+        int place = inputServer(std::string(boost::asio::buffer_cast<const char *>(buff.data())));
         game.play(place);
     }
 }
@@ -115,19 +115,19 @@ void initConnections()
     playerOneSock.send(boost::asio::buffer(outputServer(1, 1) + "\n"));
     boost::asio::streambuf buff;
     boost::asio::read_until(playerOneSock, buff, "\n");
-    int gameType = inputServer(boost::asio::buffer_cast<std::string>(buff.data()));
+    int gameType = inputServer(std::string(boost::asio::buffer_cast<const char *>(buff.data())));
 
     XnO::Game game((gameType == 1) ? XnO::small : (gameType == 2) ? XnO::medium
                                                                   : XnO::big);
 
     acc.accept(playerTwoSock);
 
-    std::thread playerOneR(playerOneReceive, std::ref(playerOneSock), game);
+    std::thread playerOneR(playerOneReceive, std::ref(playerOneSock), std::ref(game));
 
-    std::thread playerOneS(playerOneSend, std::ref(playerOneSock), game);
+    std::thread playerOneS(playerOneSend, std::ref(playerOneSock), std::ref(game));
 
-    std::thread playerTwoR(playerTwoReceive, std::ref(playerTwoSock), game);
-    std::thread playerTwoS(playerTwoSend, std::ref(playerTwoSock), game);
+    std::thread playerTwoR(playerTwoReceive, std::ref(playerTwoSock), std::ref(game));
+    std::thread playerTwoS(playerTwoSend, std::ref(playerTwoSock), std::ref(game));
     playerTwoR.join();
     playerTwoS.join();
     playerOneR.join();
