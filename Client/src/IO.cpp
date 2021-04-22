@@ -41,18 +41,6 @@ void showGame(std::string receiveDataSTR)
 void getInput(std::string &sendDataSTR)
 {
     char palyerChoice;
-    if (gameType == 0 && player == 1)
-    {
-        std::cout << "What Type of board do you want?" << std::endl
-                  << "1. Small:" << std::endl
-                  << "A-B-C\n| | |\nD-E-F\n| | |\nG-H-I\n\n"
-                  << "2. Medium:" << std::endl
-                  << "A---B---C\n|   |   |\n| D-E-F |\n| |   | |\nG-H   I-J\n| |   | |\n| K-L-M |\n|   |   |\nN---O---P\n\n"
-                  << "3. Big:" << std::endl
-                  << "A-----B-----C\n|     |     |\n| D---E---F |\n| |   |   | |\n| | G-H-I | |\n| | |   | | |\nJ-K-L   M-N-O\n| | |   | | |\n| | P---Q | |\n| |/     \\| |\n| R-------S |\n| /       \\ |\nT-----------U\n\n";
-        palyerChoice = std::getchar();
-        sendDataSTR = outputClient(1, palyerChoice);
-    }
     if (turn == player)
     {
         palyerChoice = std::getchar();
