@@ -16,8 +16,15 @@ void playerOneReceive(boost::asio::ip::tcp::socket &sock, XnO::Game &game)
     {
         boost::asio::streambuf buff;
         boost::asio::read_until(sock, buff, "\n");
-        int place = inputServer(std::string(boost::asio::buffer_cast<const char *>(buff.data())));
-        game.play(place);
+        std::string raw_data = std::string(boost::asio::buffer_cast<const char *>(buff.data()));
+        if (raw_data.find(':') != std::string::npos)
+        {
+            int place = inputServer(raw_data);
+            game.play(place);
+            DEBUG << "player 1 played" << place << " ################";
+
+            game.player1->setRemainTime(40);
+        }
     }
 }
 
@@ -26,8 +33,10 @@ void playerOneSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
     while (true)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
+
         int winner = game.board->checkWinner();
-        if (winner != 1)
+
+        if (winner != -1)
         {
             std::string msg = outputServer(3, winner);
             msg += "\n";
@@ -47,9 +56,15 @@ void playerOneSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
         {
             gameType = 3;
         }
+
         std::string msg = outputServer(gameType, game.board->getTiles(), (game.getTurn() == XnO::Player1) ? 1 : 2, game.player1->getRemainTime());
+        DEBUG << " sended turn to 1" << ((game.getTurn() == XnO::Player1) ? 1 : 2);
+
         //std::cin >> msg;
-        game.player1->setRemainTime(game.player1->getRemainTime() - 1);
+        if (game.getTurn() == XnO::Player1)
+        {
+            game.player1->setRemainTime(game.player1->getRemainTime() - 1);
+        }
         msg += "\n";
         sock.send(boost::asio::buffer(msg));
     }
@@ -57,12 +72,18 @@ void playerOneSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
 
 void playerTwoReceive(boost::asio::ip::tcp::socket &sock, XnO::Game &game)
 {
-    while (true)
+    boost::asio::streambuf buff;
+    boost::asio::read_until(sock, buff, "\n");
+    std::string raw_data = std::string(boost::asio::buffer_cast<const char *>(buff.data()));
+    if (raw_data.find(':') != std::string::npos)
     {
-        boost::asio::streambuf buff;
-        boost::asio::read_until(sock, buff, "\n");
-        int place = inputServer(std::string(boost::asio::buffer_cast<const char *>(buff.data())));
+
+        int place = inputServer(raw_data);
+
         game.play(place);
+        DEBUG << "player 2 played" << place << " ################";
+
+        game.player2->setRemainTime(40);
     }
 }
 
@@ -71,8 +92,9 @@ void playerTwoSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
     while (true)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
+
         int winner = game.board->checkWinner();
-        if (winner != 1)
+        if (winner != -1)
         {
             std::string msg = outputServer(3, winner);
             msg += "\n";
@@ -92,9 +114,14 @@ void playerTwoSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
         {
             gameType = 3;
         }
+
         std::string msg = outputServer(gameType, game.board->getTiles(), (game.getTurn() == XnO::Player1) ? 1 : 2, game.player2->getRemainTime());
+        DEBUG << " sended turn to 2" << ((game.getTurn() == XnO::Player1) ? 1 : 2);
         //std::cin >> msg;
-        game.player2->setRemainTime(game.player2->getRemainTime() - 1);
+        if (game.getTurn() == XnO::Player2)
+        {
+            game.player2->setRemainTime(game.player2->getRemainTime() - 1);
+        }
         msg += "\n";
         sock.send(boost::asio::buffer(msg));
     }
@@ -119,8 +146,13 @@ void initConnections()
 
     XnO::Game game((gameType == 1) ? XnO::small : (gameType == 2) ? XnO::medium
                                                                   : XnO::big);
+    DEBUG << "game created" << gameType;
 
     acc.accept(playerTwoSock);
+    playerTwoSock.send(boost::asio::buffer(outputServer(1, 2) + "\n"));
+    // playerTwoSock.send(boost::asio::buffer(outputServer(2, gameType) + "\n"));
+
+    DEBUG << "player 2 joined";
 
     std::thread playerOneR(playerOneReceive, std::ref(playerOneSock), std::ref(game));
 
@@ -128,6 +160,8 @@ void initConnections()
 
     std::thread playerTwoR(playerTwoReceive, std::ref(playerTwoSock), std::ref(game));
     std::thread playerTwoS(playerTwoSend, std::ref(playerTwoSock), std::ref(game));
+    DEBUG << "threads are runing";
+
     playerTwoR.join();
     playerTwoS.join();
     playerOneR.join();

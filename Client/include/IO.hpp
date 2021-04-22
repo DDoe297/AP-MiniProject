@@ -9,6 +9,6 @@
 #include "DataParser.hpp"
 
 bool validate(char data);
-void getInput(std::string &sendDataSTR);
+bool getInput(std::string &sendDataSTR);
 void showGame(std::string receiveDataSTR);
 #endif

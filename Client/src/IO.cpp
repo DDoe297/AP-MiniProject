@@ -1,11 +1,12 @@
 #include "../include/IO.hpp"
+#include "../include/logger.hpp"
 void showGame(std::string receiveDataSTR)
 {
     inputClient(receiveDataSTR);
     clear();
     if (!winner)
     {
-        std::cout << "Remaining Time:" << remainingTime << std::endl;
+        std::cout << "Remaining Time:" << remainingTime << "turn :" << turn << std::endl;
         if (errorMessage.length())
         {
             std::cout << errorMessage << std::endl;
@@ -38,16 +39,18 @@ void showGame(std::string receiveDataSTR)
         std::cout << "Player " << winner << " has won the game!" << std::endl;
     }
 }
-void getInput(std::string &sendDataSTR)
+bool getInput(std::string &sendDataSTR)
 {
-    char palyerChoice;
+    bool dataSend = false;
+    char palyerChoice = 0;
+    std::cin >> palyerChoice;
     if (turn == player)
     {
-        palyerChoice = std::getchar();
         palyerChoice = tolower(palyerChoice);
         palyerChoice -= 'a';
         if (validate(palyerChoice))
         {
+            dataSend = true;
             sendDataSTR = outputClient(2, palyerChoice);
             varLock.lock();
             errorMessage = "";
@@ -60,19 +63,26 @@ void getInput(std::string &sendDataSTR)
             varLock.unlock();
         }
     }
+
+    return dataSend;
 }
 bool validate(char data)
 {
-    if (gameType == 1)
+    if (turn == player)
     {
-        return (data >= 0 && data <= 8 && !gameBase[data]);
+        if (gameType == 1)
+        {
+            return (data >= 0 && data <= 8 && !gameBase[data]);
+        }
+        else if (gameType == 2)
+        {
+            return (data >= 0 && data <= 15 && !gameBase[data]);
+        }
+        else if (gameType == 3)
+        {
+            return (data >= 0 && data <= 20 && !gameBase[data]);
+        }
     }
-    else if (gameType == 2)
-    {
-        return (data >= 0 && data <= 20 && !gameBase[data]);
-    }
-    else if (gameType == 3)
-    {
-        return (data >= 0 && data <= 15 && !gameBase[data]);
-    }
+
+    return false;
 }
