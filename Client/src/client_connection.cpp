@@ -1,8 +1,5 @@
-#include <iostream>
-#include <boost/asio.hpp>
-#include <thread>
+
 #include "../include/client_connection.hpp"
-#include "../include/logger.hpp"
 
 void receiveData(boost::asio::ip::tcp::socket &sock)
 {
@@ -10,7 +7,8 @@ void receiveData(boost::asio::ip::tcp::socket &sock)
     {
         boost::asio::streambuf buff;
         boost::asio::read_until(sock, buff, "\n");
-        std::cout << "server:" << boost::asio::buffer_cast<const char *>(buff.data()) << std::endl;
+        receiveDataSTR = std::string(boost::asio::buffer_cast<const char *>(buff.data()));
+        showGame();
     }
 }
 
@@ -19,10 +17,9 @@ void sendData(boost ::asio::ip::tcp::socket &sock)
 
     while (true)
     {
-        std::string msg;
-        std::cin >> msg;
-        msg += "\n";
-        sock.send(boost::asio::buffer(msg));
+        getInput();
+        sendDataSTR += "\n";
+        sock.send(boost::asio::buffer(sendDataSTR));
     }
 }
 
