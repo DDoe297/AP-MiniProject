@@ -8,7 +8,7 @@
 #include "ClearScreen.hpp"
 #include "DataParser.hpp"
 
-void getInput(void);
-void showGame(void);
-
+bool validate(char data);
+void getInput(std::string &sendDataSTR);
+void showGame(std::string receiveDataSTR);
 #endif

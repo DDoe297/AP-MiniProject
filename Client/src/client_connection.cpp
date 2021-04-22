@@ -3,21 +3,26 @@
 
 void receiveData(boost::asio::ip::tcp::socket &sock)
 {
+    std::string receiveDataSTR;
     while (true)
     {
         boost::asio::streambuf buff;
         boost::asio::read_until(sock, buff, "\n");
         receiveDataSTR = std::string(boost::asio::buffer_cast<const char *>(buff.data()));
-        showGame();
+        showGame(receiveDataSTR);
+        if (winner)
+        {
+            break;
+        }
     }
 }
 
 void sendData(boost ::asio::ip::tcp::socket &sock)
 {
-
+    std::string sendDataSTR;
     while (true)
     {
-        getInput();
+        getInput(sendDataSTR);
         sendDataSTR += "\n";
         sock.send(boost::asio::buffer(sendDataSTR));
     }
