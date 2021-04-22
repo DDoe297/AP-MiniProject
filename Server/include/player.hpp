@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include <iostream>
-#include "./game.hpp"
 namespace XnO
 {
     class Player

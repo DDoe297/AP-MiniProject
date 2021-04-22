@@ -10,5 +10,7 @@
 
 void receiveData(boost::asio::ip::tcp::socket &sock);
 void sendData(boost::asio::ip::tcp::socket &sock);
+void initConnections();
+
 
 #endif
