@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <iostream>
+#include <mutex>
 
-int player = 0, gameType = 0, turn = 0, remainingTime = 0, winner = 0, lastMessageType = 0;
-char palyerChoice;
-std::string receiveDataSTR, sendDataSTR, errorMessage;
+int player = 0, gameType = 0, turn = 0, remainingTime = 0, winner = 0;
+std::string errorMessage;
 std::vector<int> gameBase;
+std::mutex varLock;
 
 #endif

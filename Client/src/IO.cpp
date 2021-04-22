@@ -1,6 +1,5 @@
 #include "../include/IO.hpp"
-bool validate(char data);
-void showGame(void)
+void showGame(std::string receiveDataSTR)
 {
     inputClient(receiveDataSTR);
     clear();
@@ -39,8 +38,9 @@ void showGame(void)
         std::cout << "Player " << winner << " has won the game!" << std::endl;
     }
 }
-void getInput(void)
+void getInput(std::string &sendDataSTR)
 {
+    char palyerChoice;
     if (gameType == 0 && player == 1)
     {
         std::cout << "What Type of board do you want?" << std::endl
@@ -56,14 +56,35 @@ void getInput(void)
     if (turn == player)
     {
         palyerChoice = std::getchar();
+        palyerChoice = tolower(palyerChoice);
+        palyerChoice -= 'a';
         if (validate(palyerChoice))
         {
             sendDataSTR = outputClient(2, palyerChoice);
+            varLock.lock();
             errorMessage = "";
+            varLock.unlock();
         }
         else
         {
+            varLock.lock();
             errorMessage = "Invalid Data";
+            varLock.unlock();
         }
+    }
+}
+bool validate(char data)
+{
+    if (gameType == 1)
+    {
+        return (data >= 0 && data <= 8 && !gameBase[data]);
+    }
+    else if (gameType == 2)
+    {
+        return (data >= 0 && data <= 20 && !gameBase[data]);
+    }
+    else if (gameType == 3)
+    {
+        return (data >= 0 && data <= 15 && !gameBase[data]);
     }
 }

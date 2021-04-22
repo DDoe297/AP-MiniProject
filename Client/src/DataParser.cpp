@@ -1,4 +1,5 @@
 #include "../include/DataParser.hpp"
+#include "../include/GlobalVars.hpp"
 void inputClient(std::string input)
 {
     std::istringstream split(input);
@@ -9,29 +10,43 @@ void inputClient(std::string input)
     if (dType == 1)
     {
         std::getline(split, token, ':');
+        varLock.lock();
         player = stoi(token);
+        varLock.unlock();
     }
     else if (dType == 2)
     {
-        std::vector<int> gameBase;
+        varLock.lock();
+        gameBase.clear();
+        varLock.unlock();
         std::getline(split, token, '-');
+        varLock.lock();
         gameType = std::stoi(token);
+        varLock.unlock();
         std::getline(split, token, '-');
         std::istringstream base(token);
         std::string point;
         while (std::getline(base, point, ','))
         {
+            varLock.lock();
             gameBase.push_back(stoi(point));
+            varLock.unlock();
         }
         std::getline(split, token, '-');
+        varLock.lock();
         turn = std::stoi(token);
+        varLock.unlock();
         std::getline(split, token, '-');
+        varLock.lock();
         remainingTime = std::stoi(token);
+        varLock.unlock();
     }
     else if (dType == 3)
     {
         std::getline(split, token, ':');
+        varLock.lock();
         winner = stoi(token);
+        varLock.unlock();
     }
 }
 std::string outputClient(int messageType, int message)
