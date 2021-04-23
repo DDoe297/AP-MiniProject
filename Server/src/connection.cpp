@@ -41,6 +41,7 @@ void playerOneSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
             std::string msg = outputServer(3, winner);
             msg += "\n";
             sock.send(boost::asio::buffer(msg));
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             std::exit(0);
         }
         if (timeWinner != -1)
@@ -117,7 +118,8 @@ void playerTwoSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
             std::string msg = outputServer(3, winner);
             msg += "\n";
             sock.send(boost::asio::buffer(msg));
-            break;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            std::exit(0);
         }
         if (timeWinner != -1)
         {

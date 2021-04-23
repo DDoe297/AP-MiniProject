@@ -1,7 +1,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#define DEBUG_MODE true
+#define DEBUG_MODE false
 class Log
 {
 public:
