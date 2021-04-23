@@ -6,7 +6,7 @@ void showGame(std::string receiveDataSTR)
     clear();
     if (!winner)
     {
-        std::cout << "\e[1;33Remaining Time:" << remainingTime << "\e[1;37m" << std::endl;
+        std::cout << "\e[1;33mRemaining Time:" << remainingTime << "\e[1;37m" << std::endl;
         if (errorMessage.length())
         {
             std::cout << "\e[0;31m" << errorMessage << "\e[1;37m" << std::endl;
