@@ -3,7 +3,6 @@
 
 void receiveData(boost::asio::ip::tcp::socket &sock)
 {
-    DEBUG << "client reciving data";
 
     std::string receiveDataSTR;
     while (true)
@@ -21,7 +20,6 @@ void receiveData(boost::asio::ip::tcp::socket &sock)
 
 void sendData(boost ::asio::ip::tcp::socket &sock)
 {
-    DEBUG << "client sending data";
 
     std::string sendDataSTR;
     while (true)
@@ -30,10 +28,8 @@ void sendData(boost ::asio::ip::tcp::socket &sock)
         {
 
             sendDataSTR += "\n";
-            DEBUG << "sending data to server" << sendDataSTR;
 
             sock.send(boost::asio::buffer(sendDataSTR));
-            DEBUG << "data send" << sendDataSTR;
         }
     }
 }
@@ -43,7 +39,7 @@ void initConnections()
     boost::asio::io_service io;
     boost::asio::ip::tcp::socket sock(io);
     sock.connect(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 1234));
-    DEBUG << "connected to server";
+
     boost::asio::streambuf buff;
     boost::asio::read_until(sock, buff, "\n");
     std::string data = std::string(boost::asio::buffer_cast<const char *>(buff.data()));
@@ -52,7 +48,7 @@ void initConnections()
     std::getline(split, token, ':');
     std::getline(split, token, ':');
     player = std::stoi(token);
-    DEBUG << "i am player " << player;
+
     if (player == 1)
     {
         char palyerChoice;
@@ -68,7 +64,6 @@ void initConnections()
         palyerChoice -= '0';
         data = outputClient(1, palyerChoice) + "\n";
         sock.send(boost::asio::buffer(data));
-        DEBUG << "client one";
     }
     // else
     // {
@@ -79,7 +74,7 @@ void initConnections()
     //     std::getline(split, token, ':');
     //     std::getline(split, token, ':');
     //     gameType = std::stoi(token);
-    //     DEBUG << "client two";
+
     // }
     std::thread t1(receiveData, std::ref(sock));
     std::thread t2(sendData, std::ref(sock));
