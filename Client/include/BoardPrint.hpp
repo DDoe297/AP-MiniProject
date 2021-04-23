@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 
-char printBoardHelper(int player, char boardChar);
+std::string printBoardHelper(int player, char boardChar);
 void showBoardOne(std::vector<int> gameBase);
 void showBoardTwo(std::vector<int> gameBase);
 void showBoardThree(std::vector<int> gameBase);

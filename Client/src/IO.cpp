@@ -6,10 +6,10 @@ void showGame(std::string receiveDataSTR)
     clear();
     if (!winner)
     {
-        std::cout << "Remaining Time:" << remainingTime << "turn :" << turn << std::endl;
+        std::cout << "\e[1;33Remaining Time:" << remainingTime << "\e[1;37m" << std::endl;
         if (errorMessage.length())
         {
-            std::cout << errorMessage << std::endl;
+            std::cout << "\e[0;31m" << errorMessage << "\e[1;37m" << std::endl;
         }
         switch (gameType)
         {
@@ -27,16 +27,16 @@ void showGame(std::string receiveDataSTR)
         }
         if (turn == player)
         {
-            std::cout << ">" << std::endl;
+            std::cout << "\e[1;33m>\e[1;37m" << std::endl;
         }
         else
         {
-            std::cout << "Not Your Turn" << std::endl;
+            std::cout << "\e[1;33mNot Your Turn\e[1;37m" << std::endl;
         }
     }
     else
     {
-        std::cout << "Player " << winner << " has won the game!" << std::endl;
+        std::cout << "\e[0;35mPlayer " << winner << " has won the game!\e[1;37m" << std::endl;
     }
 }
 bool getInput(std::string &sendDataSTR)

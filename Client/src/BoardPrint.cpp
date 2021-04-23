@@ -1,17 +1,17 @@
 #include "../include/BoardPrint.hpp"
-char printBoardHelper(int player, char boardChar)
+std::string printBoardHelper(int player, char boardChar)
 {
     if (player == 1)
     {
-        return '1';
+        return "\e[0;34m1\e[1;37m";
     }
     else if (player == 2)
     {
-        return '2';
+        return "\e[0;32m2\e[1;37m";
     }
     else
     {
-        return boardChar;
+        return "\e[1;37m" + boardChar;
     }
 }
 void showBoardOne(std::vector<int> gameBase)
