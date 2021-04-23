@@ -27,7 +27,7 @@ void showGame(std::string receiveDataSTR)
         }
         if (turn == player)
         {
-            std::cout << ">";
+            std::cout << ">" << std::endl;
         }
         else
         {

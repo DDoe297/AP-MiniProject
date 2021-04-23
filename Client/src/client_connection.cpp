@@ -14,7 +14,7 @@ void receiveData(boost::asio::ip::tcp::socket &sock)
         showGame(receiveDataSTR);
         if (winner)
         {
-            break;
+            std::exit(0);
         }
     }
 }
@@ -30,7 +30,10 @@ void sendData(boost ::asio::ip::tcp::socket &sock)
         {
 
             sendDataSTR += "\n";
+            DEBUG << "sending data to server" << sendDataSTR;
+
             sock.send(boost::asio::buffer(sendDataSTR));
+            DEBUG << "data send" << sendDataSTR;
         }
     }
 }
