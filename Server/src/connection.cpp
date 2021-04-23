@@ -9,6 +9,7 @@
 #include "../include/logger.hpp"
 #include "../include/game.hpp"
 #include "../include/data_parser.hpp"
+int timeWinner = -1;
 
 void playerOneReceive(boost::asio::ip::tcp::socket &sock, XnO::Game &game)
 {
@@ -43,6 +44,22 @@ void playerOneSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
             sock.send(boost::asio::buffer(msg));
             std::exit(0);
         }
+        if (timeWinner != -1)
+        {
+            std::string msg = outputServer(3, timeWinner);
+            msg += "\n";
+            sock.send(boost::asio::buffer(msg));
+            std::exit(0);
+        }
+        if (game.player1->getRemainTime() == 0)
+        {
+            std::string msg = outputServer(3, 2);
+            msg += "\n";
+            sock.send(boost::asio::buffer(msg));
+            // std::exit(0);
+            timeWinner = 2;
+        }
+
         int gameType = 0;
         if (game.board->getType() == XnO::small)
         {
@@ -104,6 +121,24 @@ void playerTwoSend(boost ::asio::ip::tcp::socket &sock, XnO::Game &game)
             sock.send(boost::asio::buffer(msg));
             break;
         }
+        if (timeWinner != -1)
+        {
+            std::string msg = outputServer(3, timeWinner);
+            msg += "\n";
+            sock.send(boost::asio::buffer(msg));
+
+            std::exit(0);
+        }
+        if (game.player2->getRemainTime() == 0)
+        {
+            std::string msg = outputServer(3, 1);
+            msg += "\n";
+            sock.send(boost::asio::buffer(msg));
+            // std::exit(0);
+            timeWinner = 1;
+            break;
+        }
+
         int gameType = 0;
         if (game.board->getType() == XnO::small)
         {
